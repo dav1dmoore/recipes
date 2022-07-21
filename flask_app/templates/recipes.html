@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Share</title>
+</head>
+<body>
+    <h1>Welcome, {{ session['user_first_name'] }}</h1>
+    <p>All posted recipes:</p>
+    <a href="/recipe/new">+ Create</a>
+    <a href="/logout">Logout</a>
+    <table class="">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Under</th>
+          <th>Posted By</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for recipe in recipes %}
+          <tr>
+            <td>{{recipe.name}}</td>
+              {% if recipe.under_30 == '1' %}
+              <td>Yes</td>
+              {% else %}
+              <td>No</td>
+              {% endif %}
+            <td>{{recipe.first_name}}</td>
+            <td>
+              {% if session['user_id'] == recipe.users_id %}
+              <p><a href="/view_recipe/{{recipe.id}}">View Recipe</a> | <a href="/edit_recipe/{{recipe.id}}">Edit</a> | 
+                <a href="/delete_recipe/{{recipe.id}}"> Delete </a></p>
+              {% else %}
+              <a href="/view_recipe/{{recipe.id}}">View</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</body>
+</html>
